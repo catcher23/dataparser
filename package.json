@@ -37,5 +37,14 @@
     "vinyl-source-stream": "^1.1.0",
     "watchify": "^3.7.0",
     "webpack": "^1.12.9"
+  },
+  "engines": {
+    // Your versions of node and npm should go here
+    // Check this by running the `node -v` and `npm -v` commands in the root of your project
+    "node": "4.4.5",
+    "npm": "3.9.5"
+  },
+  "scripts": {
+    "postinstall": "./node_modules/.bin/webpack"
   }
 }

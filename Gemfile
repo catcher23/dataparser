@@ -12,7 +12,6 @@ gem 'turbolinks'
 gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'react-rails'
-gem 'newrelic_rpm'
 gem 'underscore-rails'
 
 group :development, :test do
@@ -25,5 +24,10 @@ group :development do
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'spring'
+end
+
+group: production do
+  gem 'newrelic_rpm'
+  gem 'rails_12factor' # error feedback
 end
 
