@@ -4,7 +4,8 @@
   "description": "== README",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall": "./node_modules/.bin/webpack"
   },
   "repository": {
     "type": "git",
@@ -39,12 +40,7 @@
     "webpack": "^1.12.9"
   },
   "engines": {
-    // Your versions of node and npm should go here
-    // Check this by running the `node -v` and `npm -v` commands in the root of your project
     "node": "4.4.5",
     "npm": "3.9.5"
-  },
-  "scripts": {
-    "postinstall": "./node_modules/.bin/webpack"
   }
 }
