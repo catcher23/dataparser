@@ -46,7 +46,7 @@ class Interface extends React.Component {
       data: {data: data.data, fieldMapping: this.state.fieldMapping},
       success: (data) => {
         let errorResultMessage = that.handleErrorMessage(data);
-        
+
         that.setState({
           data:data.validatedData,
           entriesWithErrors:data.entriesWithErrors,
@@ -98,6 +98,7 @@ class Interface extends React.Component {
         <div id="upload-alert"></div>
         <div id="validate-alert"></div>
         <h3>Data Parser</h3>
+        <a href = "http://res.cloudinary.com/danlau168/raw/upload/v1467527878/customer_shipping_addresses_qlnqj6.csv">Sample File </a>
         <CSVInput handleFileChange={this.handleFileChange} data={this.state.data}/>
         <button className='btn btn-primary pull-left' onClick={this.validate}>Validate</button>
         <br/>

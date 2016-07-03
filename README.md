@@ -1,5 +1,6 @@
 ## Dataparser Description
 A web interface that accepts file uploads, stores the data into a relational database, and displays the data from the database.
+Sample file: <a href = "http://res.cloudinary.com/danlau168/raw/upload/v1467527878/customer_shipping_addresses_qlnqj6.csv" >
 
 ## Video Walkthrough 
 
