@@ -19,6 +19,7 @@ class Interface extends React.Component {
       data: [],
       entriesWithErrors: 0,
       errorsAreHidden: 'true',
+      errorResultMessage: "",
       columns: [],
       // keys are the headers in csv file, values are database column names
       fieldMapping: {
@@ -44,8 +45,14 @@ class Interface extends React.Component {
       method: "POST",
       data: {data: data.data, fieldMapping: this.state.fieldMapping},
       success: (data) => {
-        let errorsAreHidden = data.entriesWithErrors > 0 ? '' : 'true';
-        that.setState({data:data.validatedData, entriesWithErrors:data.entriesWithErrors, errorsAreHidden:errorsAreHidden});
+        let errorResultMessage = that.handleErrorMessage(data);
+        
+        that.setState({
+          data:data.validatedData,
+          entriesWithErrors:data.entriesWithErrors,
+          errorsAreHidden:"",
+          errorResultMessage:errorResultMessage
+        });
 
         $('#validate-alert').show();
         $('#validate-alert').html('<div class="alert alert-success">File Validated!</div>');
@@ -55,6 +62,18 @@ class Interface extends React.Component {
         }, 3000);
       }
     });
+  }
+
+  handleErrorMessage(data) {
+    let errorResultMessage;
+    if (data.entriesWithErrors === 0) {
+      errorResultMessage = "The file has no entries with errors."
+    } else if (data.entriesWithErrors === 1) {
+      errorResultMessage = "The file has 1 entry with an error. It is listed first."
+    } else {
+      errorResultMessage = "The file has " + data.entriesWithErrors + " entries with errors. They are listed first."
+    }
+    return errorResultMessage;
   }
 
   validate() {
@@ -83,7 +102,7 @@ class Interface extends React.Component {
         <button className='btn btn-primary pull-left' onClick={this.validate}>Validate</button>
         <br/>
         <div id="entries-with-errors"></div>
-        <DataViewer data={this.state.data} fieldMapping = {this.state.fieldMapping} entriesWithErrors = {this.state.entriesWithErrors} errorsAreHidden = {this.state.errorsAreHidden} />
+        <DataViewer data={this.state.data} fieldMapping = {this.state.fieldMapping} entriesWithErrors = {this.state.entriesWithErrors} errorsAreHidden = {this.state.errorsAreHidden} errorResultMessage= {this.state.errorResultMessage} />
       </div>
     )
   }

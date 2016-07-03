@@ -1,4 +1,5 @@
 import React from 'react';
+import Paginator from 'react-pagify';
 import ReactTooltip from 'react-tooltip';
 
 class DataViewer extends React.Component {
@@ -16,21 +17,68 @@ class DataViewer extends React.Component {
         page: 0,
         perPage: 10
       },
-      errorsAreHidden: this.props.errorsAreHidden
+      errorsAreHidden: 'true'
     };
+
+    this.perPageValueList = [10, 25, 50, 100];
+  }
+
+  onSelect(page) {
+    const pagination = this.state.pagination || {};
+    pagination.page = page;
+    this.setState({
+      pagination: pagination
+    });
+  }
+
+  onPerPage(e) {
+    const pagination = this.state.pagination || {};
+
+    pagination.perPage = parseInt(e.target.value, 10);
+
+    this.setState({
+      pagination: pagination
+    });
+  }
+
+  _buildPerPageDropdown() {
+    return this.perPageValueList.map( (val, idx) => {
+      return <option key={idx} value={val.toString()}>{val}</option>;
+    });
   }
 
   render() {
+    const paginated = Paginator.paginate(this.props.data, this.state.pagination);
     return (
       <div id="file-viewer">
         <div id='per-page-container' className="clearfix">
           <br/>
           <span>Per page</span>
           <div className="col-md-1 no-left-padding">
+            <select type="c-select" className="form-control" value={this.state.pagination.perPage} onChange={this.onPerPage}>
+              {this._buildPerPageDropdown()}
+            </select>
           </div>
         </div>
 
-        <span id="entries-with-errors" hidden={this.props.errorsAreHidden} >You have {this.props.entriesWithErrors} entries with errors. They are listed first.</span>
+        <Paginator
+          className='pagify-pagination no-left-margin'
+          ellipsesClassName='pagify-ellipsis'
+          activeClassName='selected'
+          inactiveClassName='inactive'
+          page={paginated.page}
+          pages={paginated.amount}
+          beginPages={3}
+          endPages={3}
+          sidePages={1}
+          showPrevNext={true}
+          alwaysShowPrevNext={true}
+          prevButton={'Prev'}
+          nextButton={'Next'}
+          ellipsisButton={'…'}
+          onSelect={this.onSelect}>
+        </Paginator>
+        <span id="entries-with-errors" hidden={this.props.errorsAreHidden}>{this.props.errorResultMessage}</span>
         <Table data={paginated.data} fieldMapping = {this.props.fieldMapping}/>
       </div>
     )

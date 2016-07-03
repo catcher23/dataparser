@@ -11,5 +11,4 @@ class User < ActiveRecord::Base
     end
     [validatedRow, has_errors]
   end
-
 end
