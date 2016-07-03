@@ -19,6 +19,7 @@ group :development, :test do
 end
 
 group :development do
+  gem 'rspec-rails'
   gem 'web-console', '~> 2.0'
   gem 'pry-rails'
   gem 'better_errors'
